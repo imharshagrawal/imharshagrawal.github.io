@@ -46,7 +46,7 @@ export default function Navbar() {
             </a>
           ))}
           <a
-            href="/resume.pdf"
+            href="/Harsh_Agrawal_Latest_Resume.pdf"
             download
             className={`btn btn-primary ${styles.resumeBtn}`}
             onClick={() => setMenuOpen(false)}

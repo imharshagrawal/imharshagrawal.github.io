@@ -16,8 +16,8 @@ export const STATS = [
 
 export const SKILLS = [
   {
-    category: 'Product & Analytics',
-    items: ['Product Management','Business Analysis','Data Analytics','EDA','Storyboarding','Roadmapping','UAT','Backlog Mgmt'],
+    category: 'Product Management',
+    items: ['Product Lifecycle Management', 'Agile Methodology', 'Cross-functional Leadership', 'SaaS Product', 'Scrum', 'User Stories', 'Sprint Planning', 'Release Management', 'Product Roadmaps', 'Feature Prioritization', 'Figma', 'Confluence', 'Windsurf'],
     color: 'accent',
   },
   {
@@ -27,19 +27,19 @@ export const SKILLS = [
   },
   {
     category: 'Cloud & Data Platforms',
-    items: ['AWS Redshift','S3','EC2','QuickSight','Athena','DMS','IBM Netezza','Toad DB2','Change Data Capture'],
+    items: ['AWS Redshift','S3','EC2','QuickSight','Athena','DMS','IBM Netezza','Toad DB2','Change Data Capture','Google Cloud Platform'],
     color: 'emerald',
   },
   {
-    category: 'Engineering',
-    items: ['ETL Pipelines','Data Warehousing','Data Engineering','GIT','Bitbucket'],
+    category: 'Analytics & Data Engineering',
+    items: ['ETL Pipelines','Data Warehousing','Data Engineering','GIT','Bitbucket','Data Ingestion','Problem Solving','EDA','Story Boarding'],
     color: 'amber',
   },
 ]
 
 export const EXPERIENCE = [
   {
-    role: 'Senior Business Analyst — Product Management',
+    role: 'Senior Business Analyst | Product Management',
     company: 'Impact Analytics',
     location: 'Bengaluru, India',
     period: 'Jul 2024 – Present',
@@ -53,7 +53,6 @@ export const EXPERIENCE = [
       'Delivered core capabilities: Automated Order Recommendations, PO Expedite, Safety Stock Optimization, PO Rebalancing, and Ad-Hoc Ordering.',
       'Achieved ~30% recommendation adoption across deployed customers, validating product value.',
       'Delivered 3+ major product enhancements post-launch based on usage analytics and customer feedback.',
-      'Received executive recognition for strong product health and contribution to InventorySmart\'s strategic growth.',
     ],
     tags: ['0→1 Product', '7 Retailers', '100+ Planners', '30% Adoption'],
   },
