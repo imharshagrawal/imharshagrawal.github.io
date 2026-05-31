@@ -141,7 +141,7 @@ export const CERTIFICATIONS = [
 ]
 
 export const SOCIAL = [
-  { label: 'LinkedIn', href: 'https://linkedin.com/in/harshagrawal', icon: 'linkedin' },
-  { label: 'GitHub',   href: 'https://github.com/harshagrawal',   icon: 'github' },
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/imharsha/', icon: 'linkedin' },
+  { label: 'GitHub',   href: 'https://github.com/imharshagrawal',   icon: 'github' },
   { label: 'Email',    href: 'mailto:h3108.agrawal@gmail.com',      icon: 'mail' },
 ]
