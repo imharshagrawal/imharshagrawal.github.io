@@ -1,71 +1,180 @@
-# [Start Bootstrap - Resume](https://startbootstrap.com/template-overviews/resume/)
+# Harsh Agrawal — Portfolio
 
-[Resume](https://startbootstrap.com/template-overviews/resume/) is a resume and CV theme for [Bootstrap](http://getbootstrap.com/) created by [Start Bootstrap](http://startbootstrap.com/). This theme features a fixed sidebar with content sections to build a simple, yet elegant resume.
+A vibrant, fully responsive personal portfolio built with **React + Vite**, featuring:
+- ⚡ Electric indigo/violet color palette with dark/light mode (auto + manual toggle)
+- 📬 Contact form → Gmail via EmailJS (no backend needed)
+- 🚀 One-command deploy to Bitbucket Pages (free hosting)
 
-## Preview
+---
 
-[![Resume Preview](https://startbootstrap.com/assets/img/templates/resume.jpg)](https://blackrockdigital.github.io/startbootstrap-resume/)
+## Project Structure
 
-**[View Live Preview](https://blackrockdigital.github.io/startbootstrap-resume/)**
+```
+portfolio/
+├── index.html
+├── vite.config.js
+├── package.json
+├── public/
+│   └── resume.pdf          ← Drop your resume PDF here
+└── src/
+    ├── main.jsx
+    ├── App.jsx
+    ├── styles/
+    │   └── global.css
+    ├── hooks/
+    │   └── useTheme.jsx     ← Dark/light mode (system + manual)
+    ├── data/
+    │   └── portfolio.js     ← All your content lives here
+    └── components/
+        ├── Navbar.jsx / .module.css
+        ├── Hero.jsx / .module.css
+        ├── About.jsx / .module.css
+        ├── Experience.jsx / .module.css
+        ├── Projects.jsx / .module.css
+        ├── Contact.jsx / .module.css
+        ├── Footer.jsx / .module.css
+        └── ScrollTop.jsx / .module.css
+```
 
-## Status
+---
 
-[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/BlackrockDigital/startbootstrap-resume/master/LICENSE)
-[![npm version](https://img.shields.io/npm/v/startbootstrap-resume.svg)](https://www.npmjs.com/package/startbootstrap-resume)
-[![Build Status](https://travis-ci.org/BlackrockDigital/startbootstrap-resume.svg?branch=master)](https://travis-ci.org/BlackrockDigital/startbootstrap-resume)
-[![dependencies Status](https://david-dm.org/BlackrockDigital/startbootstrap-resume/status.svg)](https://david-dm.org/BlackrockDigital/startbootstrap-resume)
-[![devDependencies Status](https://david-dm.org/BlackrockDigital/startbootstrap-resume/dev-status.svg)](https://david-dm.org/BlackrockDigital/startbootstrap-resume?type=dev)
+## 1. Local Development
 
-## Download and Installation
+```bash
+npm install
+npm run dev
+# → http://localhost:5173
+```
 
-To begin using this template, choose one of the following options to get started:
-* [Download the latest release on Start Bootstrap](https://startbootstrap.com/template-overviews/resume/)
-* Install via npm: `npm i startbootstrap-resume`
-* Clone the repo: `git clone https://github.com/BlackrockDigital/startbootstrap-resume.git`
-* [Fork, Clone, or Download on GitHub](https://github.com/BlackrockDigital/startbootstrap-resume)
+---
 
-## Usage
+## 2. EmailJS Setup (Contact Form → Gmail)
 
-### Basic Usage
+1. Sign up free at **https://www.emailjs.com** (free tier = 200 emails/month)
+2. Click **Add New Service** → choose **Gmail** → connect your Gmail account
+3. Click **Email Templates** → **Create New Template**
+4. Set the template body using these variables:
+   ```
+   From: {{from_name}} <{{from_email}}>
+   Subject: {{subject}}
+   
+   {{message}}
+   ```
+5. Save and note your **Service ID**, **Template ID**, and **Public Key**
+6. Open `src/components/Contact.jsx` and replace:
+   ```js
+   const EMAILJS_SERVICE_ID  = 'YOUR_SERVICE_ID'   // e.g. 'service_abc123'
+   const EMAILJS_TEMPLATE_ID = 'YOUR_TEMPLATE_ID'  // e.g. 'template_xyz456'
+   const EMAILJS_PUBLIC_KEY  = 'YOUR_PUBLIC_KEY'   // e.g. 'abcDEF123...'
+   ```
 
-After downloading, simply edit the HTML and CSS files included with the template in your favorite text editor to make changes. These are the only files you need to worry about, you can ignore everything else! To preview the changes you make to the code, you can open the `index.html` file in your web browser.
+That's it — no backend, no server, messages land directly in your Gmail inbox.
 
-### Advanced Usage
+---
 
-After installation, run `npm install` and then run `gulp dev` which will open up a preview of the template in your default browser, watch for changes to core template files, and live reload the browser when changes are saved. You can view the `gulpfile.js` to see which tasks are included with the dev environment.
+## 3. Update Your Content
 
-#### Gulp Tasks
+All your data is centralized in **`src/data/portfolio.js`** — edit:
+- `STATS` — hero numbers
+- `SKILLS` — skill groups and chips
+- `EXPERIENCE` — roles, highlights, tags
+- `PROJECTS` — project cards
+- `CERTIFICATIONS`, `SOCIAL` — certs and social links
 
-- `gulp` the default task that builds everything
-- `gulp dev` browserSync opens the project in your default browser and live reloads when changes are made
-- `gulp sass` compiles SCSS files into CSS
-- `gulp minify-css` minifies the compiled CSS file
-- `gulp minify-js` minifies the themes JS file
-- `gulp copy` copies dependencies from node_modules to the vendor directory
+Update LinkedIn/GitHub URLs in `SOCIAL` and `CONTACT_ITEMS` in `Contact.jsx`.
 
-## Bugs and Issues
+---
 
-Have a bug or an issue with this template? [Open a new issue](https://github.com/BlackrockDigital/startbootstrap-resume/issues) here on GitHub or leave a comment on the [template overview page at Start Bootstrap](http://startbootstrap.com/template-overviews/resume/).
+## 4. Add Your Resume PDF
 
-## Custom Builds
+Drop your resume file at:
+```
+public/resume.pdf
+```
+The **Download Resume** button in the navbar will serve it automatically.
 
-You can hire Start Bootstrap to create a custom build of any template, or create something from scratch using Bootstrap. For more information, visit the **[custom design services page](https://startbootstrap.com/bootstrap-design-services/)**.
+---
 
-## About
+## 5. Deploy to Bitbucket Pages (Free)
 
-Start Bootstrap is an open source library of free Bootstrap templates and themes. All of the free templates and themes on Start Bootstrap are released under the MIT license, which means you can use them for any purpose, even for commercial projects.
+### Step 1 — Create a Bitbucket repository
 
-* https://startbootstrap.com
-* https://twitter.com/SBootstrap
+```
+Repo name: <your-username>.bitbucket.io
+```
+This exact naming convention activates Bitbucket Pages automatically.
 
-Start Bootstrap was created by and is maintained by **[David Miller](http://davidmiller.io/)**, Owner of [Blackrock Digital](http://blackrockdigital.io/).
+### Step 2 — Update vite.config.js
 
-* http://davidmiller.io
-* https://twitter.com/davidmillerskt
-* https://github.com/davidtmiller
+If your repo is NOT the root pages repo (e.g. it's `my-portfolio`), set the base:
+```js
+// vite.config.js
+export default defineConfig({
+  plugins: [react()],
+  base: '/my-portfolio/',   // only if NOT <username>.bitbucket.io
+})
+```
 
-Start Bootstrap is based on the [Bootstrap](http://getbootstrap.com/) framework created by [Mark Otto](https://twitter.com/mdo) and [Jacob Thorton](https://twitter.com/fat).
+### Step 3 — Build and push
 
-## Copyright and License
+```bash
+# Build
+npm run build
 
-Copyright 2013-2017 Blackrock Digital LLC. Code released under the [MIT](https://github.com/BlackrockDigital/startbootstrap-resume/blob/gh-pages/LICENSE) license.
+# Init git (first time)
+git init
+git remote add origin https://bitbucket.org/<your-username>/<your-username>.bitbucket.io.git
+
+# Push the dist folder contents as your main branch
+git add dist -f
+git commit -m "Deploy portfolio"
+git subtree push --prefix dist origin main
+```
+
+### Alternative — use gh-pages package (already in devDependencies)
+
+```bash
+npm run deploy
+# This runs: npm run build && npx gh-pages -d dist
+```
+
+> ⚠️ `gh-pages` pushes to a `gh-pages` branch. In Bitbucket, go to
+> **Repository Settings → Websites → Branch** and select `gh-pages`.
+
+Your site will be live at:
+```
+https://<your-username>.bitbucket.io
+```
+
+---
+
+## 6. Dark / Light Mode
+
+- **Auto**: Reads `prefers-color-scheme` on first visit
+- **Manual**: Moon/sun toggle button in the navbar — persists in localStorage
+- **Override**: Manually picking a theme disables auto-switch
+
+---
+
+## 7. Customisation Tips
+
+| What to change | Where |
+|---|---|
+| Colors / theme | `src/styles/global.css` → `:root` and `[data-theme="dark"]` |
+| Fonts | `index.html` Google Fonts link + `global.css` `--font-display` / `--font-body` |
+| All content | `src/data/portfolio.js` |
+| EmailJS keys | `src/components/Contact.jsx` top constants |
+| Profile photo | Replace `HA` initials div in `Hero.jsx` with `<img src="..." />` |
+
+---
+
+## Tech Stack (all free)
+
+| Tool | Purpose | Cost |
+|---|---|---|
+| React 18 | UI framework | Free |
+| Vite 6 | Build tool + dev server | Free |
+| CSS Modules | Scoped styles | Free |
+| EmailJS | Contact form → Gmail | Free (200/mo) |
+| Bitbucket Pages | Static hosting | Free |
+| Google Fonts (Syne + DM Sans) | Typography | Free |
