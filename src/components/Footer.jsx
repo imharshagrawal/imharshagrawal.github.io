@@ -12,7 +12,7 @@ export default function Footer() {
             <div className={styles.logoMark}>H</div>
             <div>
               <div className={styles.name}>Harsh Agrawal</div>
-              <div className={styles.tagline}>Senior BA & Product Manager · Bengaluru, India</div>
+              <div className={styles.tagline}>Product Management & Analytics · Bengaluru, India</div>
             </div>
           </div>
 

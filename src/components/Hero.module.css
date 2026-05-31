@@ -135,7 +135,7 @@
 
 .avatarWrap {
   position: relative;
-  width: 280px; height: 280px;
+  width: 360px; height: 360px;
 }
 
 .avatarRing {
@@ -149,7 +149,7 @@
 @keyframes spin { to { transform: rotate(360deg); } }
 
 .avatar {
-  width: 280px; height: 280px;
+  width: 360px; height: 360px;
   border-radius: 50%;
   background: linear-gradient(135deg, var(--accent-subtle) 0%, var(--bg-card-alt) 100%);
   border: 2px solid var(--border-strong);
@@ -159,13 +159,21 @@
   position: relative;
 }
 
-.avatarInitials {
+/* .avatarInitials {
   font-family: var(--font-display);
   font-size: 72px;
   font-weight: 800;
   color: var(--accent);
   opacity: 0.6;
   letter-spacing: -0.04em;
+} */
+
+.avatarInitials img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 15%;
+  display: block;
 }
 
 .floatBadge1,

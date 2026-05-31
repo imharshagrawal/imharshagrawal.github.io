@@ -24,7 +24,7 @@ export default function Hero() {
 
             <p className={`${styles.title} animate-fade-up delay-2`}>
               Senior Business Analyst<br />
-              <span className={styles.titleAnd}>&amp;</span> Product Manager
+              <span className={styles.titleAnd}>|</span> Product Management
             </p>
 
             <p className={`${styles.desc} animate-fade-up delay-3`}>
@@ -56,13 +56,7 @@ export default function Hero() {
             <div className={styles.avatarWrap}>
               <div className={styles.avatarRing} />
               <div className={styles.avatar}>
-                <span className={styles.avatarInitials}>HA</span>
-              </div>
-              <div className={styles.floatBadge1}>
-                <span>🏆</span> Impact Award
-              </div>
-              <div className={styles.floatBadge2}>
-                <span>🚀</span> 0→1 Product
+                <span className={styles.avatarInitials}><img src="/profile_v2.png" alt="Harsh Agrawal" /></span>
               </div>
             </div>
           </div>

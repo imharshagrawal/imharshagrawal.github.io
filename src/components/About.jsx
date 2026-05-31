@@ -20,12 +20,18 @@ export default function About() {
             </span>
             <h2 className="section-title">Analyst. Builder.<br /><span className="gradient-text">Problem Solver.</span></h2>
             <p className={styles.bio}>
-              I'm a Senior Business Analyst and Product Manager with 7 years of experience at the intersection of data, product, and strategy. From regulatory compliance frameworks in Australia to launching AI-powered SaaS platforms in the US, I've navigated complex stakeholder landscapes and translated data into decisions that move businesses forward.
+              I'm a Product Management professional with 7+ years of experience spanning Product Management, Business Analytics, Data Engineering, and Enterprise SaaS. I specialize in building AI-powered products that solve complex supply chain and inventory planning challenges for global retailers.
             </p>
             <p className={styles.bio}>
-              My sweet spot is owning the full lifecycle — discovery through deployment — working closely with engineering, data science, and executive teams to build things that actually get adopted and drive measurable ROI.
+              Currently, I lead product initiatives for InventorySmart at Impact Analytics, where I own the Ordering product area from discovery and roadmap planning through launch and adoption. My work focuses on translating customer problems into scalable product solutions that drive measurable business outcomes.
             </p>
-
+            <p className={styles.bio}>
+              Prior to Product Management, I built a strong foundation in analytics and data engineering across Retail, FinTech, Banking, and Insurance domains. This unique blend of product thinking, technical depth, and business understanding enables me to bridge the gap between customers, engineering teams, and business stakeholders.
+            </p>
+            <p className={styles.bio}>
+              I am passionate about AI-driven decision intelligence, Enterprise SaaS, Supply Chain Technology, Product Strategy, and building products that customers genuinely adopt and love.
+            </p>
+            
             <div className={styles.certifications}>
               <h3 className={styles.certTitle}>Certifications</h3>
               {CERTIFICATIONS.map((c, i) => (
@@ -70,9 +76,9 @@ export default function About() {
             <div className={styles.accolades}>
               <h3 className={styles.skillsTitle} style={{ marginBottom: '16px' }}>Recognition</h3>
               {[
-                { icon: '⚡', title: 'Impact Award', text: 'Recognized for unlocking digital capabilities as a key part of a major Mu Sigma engagement.' },
-                { icon: '💡', title: 'Spot Award', text: 'Awarded for out-of-box thinking that solved a critical problem faster than agreed timelines.' },
-                { icon: '🏆', title: 'Executive Recognition', text: 'Acknowledged at Impact Analytics for strong product health and contribution to InventorySmart\'s growth.' },
+                { icon: '⚡', title: 'Impact Excellence Award', text: 'For exceptional contribution to Impact Analytics in Q3 2025.' },
+                { icon: '⚡', title: 'Impact Award', text: 'Harsh has played a key role in unlocking digital capabilities for the clients as a part of a major Mu Sigma engagement. His resourcefulness and bias for action were instrumental in ensuring project success' },
+                { icon: '💡', title: 'Spot Award', text: 'Harsh has shown diligence and strength in taking complete ownership for his work stream. We admire his excellent technical skills, quality work and adherence to deadlines. His contribution and support to the team in tough times was remarkable. Keep up the good work!' },
               ].map((a, i) => (
                 <div key={i} className={styles.accoladeItem}>
                   <span className={styles.accoladeEmoji}>{a.icon}</span>
