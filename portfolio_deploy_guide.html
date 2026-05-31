@@ -1,0 +1,397 @@
+
+<h2 class="sr-only">Step-by-step deployment guide for Harsh Agrawal's portfolio using Bitbucket Pages and EmailJS</h2>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+.wrap { padding: 1.5rem 0; font-family: var(--font-sans); }
+.phase-tabs { display: flex; gap: 6px; margin-bottom: 1.5rem; flex-wrap: wrap; }
+.pt { padding: 6px 14px; border-radius: 20px; border: 0.5px solid var(--color-border-secondary); background: var(--color-background-secondary); font-size: 13px; cursor: pointer; color: var(--color-text-secondary); transition: all .15s; }
+.pt.active { background: var(--color-background-primary); border-color: var(--color-border-primary); color: var(--color-text-primary); font-weight: 500; }
+.phase { display: none; }
+.phase.active { display: block; }
+.steps { display: flex; flex-direction: column; gap: 14px; }
+.step { display: flex; gap: 14px; align-items: flex-start; }
+.num { width: 28px; height: 28px; border-radius: 50%; background: var(--color-background-secondary); border: 0.5px solid var(--color-border-secondary); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 500; color: var(--color-text-secondary); flex-shrink: 0; margin-top: 2px; }
+.num.done { background: var(--color-background-success); border-color: var(--color-border-success); color: var(--color-text-success); }
+.step-body { flex: 1; }
+.step-title { font-size: 14px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 4px; }
+.step-desc { font-size: 13px; color: var(--color-text-secondary); line-height: 1.6; margin-bottom: 8px; }
+.code-block { background: var(--color-background-secondary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); padding: 10px 14px; font-family: var(--font-mono); font-size: 12px; color: var(--color-text-primary); line-height: 1.7; position: relative; overflow-x: auto; white-space: pre; }
+.copy-btn { position: absolute; top: 6px; right: 8px; background: var(--color-background-primary); border: 0.5px solid var(--color-border-secondary); border-radius: 4px; padding: 2px 8px; font-size: 11px; cursor: pointer; color: var(--color-text-secondary); }
+.copy-btn:hover { color: var(--color-text-primary); }
+.note { display: flex; gap: 8px; background: var(--color-background-info); border: 0.5px solid var(--color-border-info); border-radius: var(--border-radius-md); padding: 10px 12px; font-size: 12px; color: var(--color-text-info); margin-top: 8px; line-height: 1.5; }
+.warn { display: flex; gap: 8px; background: var(--color-background-warning); border: 0.5px solid var(--color-border-warning); border-radius: var(--border-radius-md); padding: 10px 12px; font-size: 12px; color: var(--color-text-warning); margin-top: 8px; line-height: 1.5; }
+.link-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+.ext-link { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; padding: 4px 10px; border: 0.5px solid var(--color-border-secondary); border-radius: 20px; color: var(--color-text-secondary); text-decoration: none; cursor: pointer; }
+.ext-link:hover { color: var(--color-text-primary); border-color: var(--color-border-primary); }
+.divider { height: 0.5px; background: var(--color-border-tertiary); margin: 6px 0; }
+.tag { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; padding: 2px 8px; border-radius: 20px; background: var(--color-background-success); color: var(--color-text-success); border: 0.5px solid var(--color-border-success); margin-left: 8px; }
+.section-label { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: .07em; color: var(--color-text-tertiary); margin-bottom: 12px; }
+.kv { display: grid; grid-template-columns: 140px 1fr; gap: 6px 16px; font-size: 12px; margin-top: 8px; }
+.kv-key { color: var(--color-text-secondary); font-weight: 500; padding: 4px 0; }
+.kv-val { color: var(--color-text-primary); padding: 4px 0; font-family: var(--font-mono); }
+.progress { display: flex; gap: 4px; margin-bottom: 20px; }
+.prog-step { flex: 1; height: 3px; border-radius: 2px; background: var(--color-border-tertiary); transition: background .2s; }
+.prog-step.on { background: var(--color-text-info); }
+</style>
+
+<div class="wrap">
+  <div class="phase-tabs" id="tabs">
+    <button class="pt active" onclick="show(0)"><i class="ti ti-download" aria-hidden="true"></i> 1. Setup</button>
+    <button class="pt" onclick="show(1)"><i class="ti ti-mail" aria-hidden="true"></i> 2. EmailJS</button>
+    <button class="pt" onclick="show(2)"><i class="ti ti-brand-git" aria-hidden="true"></i> 3. Git init</button>
+    <button class="pt" onclick="show(3)"><i class="ti ti-cloud-upload" aria-hidden="true"></i> 4. Deploy</button>
+    <button class="pt" onclick="show(4)"><i class="ti ti-checks" aria-hidden="true"></i> 5. Go live</button>
+  </div>
+
+  <div class="progress" id="prog">
+    <div class="prog-step on"></div>
+    <div class="prog-step"></div>
+    <div class="prog-step"></div>
+    <div class="prog-step"></div>
+    <div class="prog-step"></div>
+  </div>
+
+  <!-- PHASE 0: SETUP -->
+  <div class="phase active" id="p0">
+    <div class="section-label">Prerequisites &amp; local setup</div>
+    <div class="steps">
+      <div class="step">
+        <div class="num">1</div>
+        <div class="step-body">
+          <div class="step-title">Install Node.js <span class="tag"><i class="ti ti-check" aria-hidden="true"></i> free</span></div>
+          <div class="step-desc">Download and install Node.js v18 or higher. This gives you <code>npm</code> to run the project.</div>
+          <div class="link-row">
+            <a class="ext-link" onclick="openLink('https://nodejs.org')"><i class="ti ti-external-link" aria-hidden="true"></i> nodejs.org → click "LTS"</a>
+          </div>
+          <div class="note"><i class="ti ti-info-circle" aria-hidden="true"></i> After installing, open Terminal and verify: <code>node -v</code> should print v18 or higher.</div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="num">2</div>
+        <div class="step-body">
+          <div class="step-title">Download and extract the portfolio zip</div>
+          <div class="step-desc">Download the <strong>portfolio_harsh_agrawal.zip</strong> file from this chat. Extract it to a folder on your computer — for example your Desktop.</div>
+          <div class="code-block">cd ~/Desktop/portfolio
+<button class="copy-btn" onclick="cp(this,'cd ~/Desktop/portfolio')">Copy</button></div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="num">3</div>
+        <div class="step-body">
+          <div class="step-title">Install project dependencies</div>
+          <div class="step-desc">Run this once inside the portfolio folder. It downloads React, Vite, and EmailJS packages.</div>
+          <div class="code-block">npm install
+<button class="copy-btn" onclick="cp(this,'npm install')">Copy</button></div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="num">4</div>
+        <div class="step-body">
+          <div class="step-title">Test it locally</div>
+          <div class="step-desc">This starts a live preview at <strong>localhost:5173</strong> in your browser. Every change you save updates instantly.</div>
+          <div class="code-block">npm run dev
+<button class="copy-btn" onclick="cp(this,'npm run dev')">Copy</button></div>
+          <div class="note"><i class="ti ti-info-circle" aria-hidden="true"></i> Open <strong>http://localhost:5173</strong> in your browser. You should see your portfolio running locally.</div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="num">5</div>
+        <div class="step-body">
+          <div class="step-title">Add your resume PDF</div>
+          <div class="step-desc">Copy your resume PDF into the <code>public/</code> folder and name it exactly <code>resume.pdf</code>. The download button in the navbar will serve it automatically.</div>
+          <div class="code-block">portfolio/
+  public/
+    resume.pdf   ← drop your file here</div>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:20px; display:flex; justify-content:flex-end">
+      <button class="pt" onclick="show(1)" style="background:var(--color-background-primary)">Next: EmailJS setup <i class="ti ti-arrow-right" aria-hidden="true"></i></button>
+    </div>
+  </div>
+
+  <!-- PHASE 1: EMAILJS -->
+  <div class="phase" id="p1">
+    <div class="section-label">Wire contact form → your Gmail inbox (free, no backend)</div>
+    <div class="steps">
+      <div class="step">
+        <div class="num">1</div>
+        <div class="step-body">
+          <div class="step-title">Create a free EmailJS account</div>
+          <div class="step-desc">Go to emailjs.com and sign up. Free tier gives you 200 emails/month — more than enough.</div>
+          <div class="link-row">
+            <a class="ext-link" onclick="openLink('https://www.emailjs.com')"><i class="ti ti-external-link" aria-hidden="true"></i> emailjs.com → Sign up free</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="num">2</div>
+        <div class="step-body">
+          <div class="step-title">Connect your Gmail</div>
+          <div class="step-desc">In the EmailJS dashboard: click <strong>Email Services</strong> → <strong>Add New Service</strong> → choose <strong>Gmail</strong> → click <strong>Connect Account</strong> → sign in with your Gmail. Note the <strong>Service ID</strong> it gives you (e.g. <code>service_abc123</code>).</div>
+          <div class="note"><i class="ti ti-info-circle" aria-hidden="true"></i> EmailJS connects via OAuth — it never stores your password.</div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="num">3</div>
+        <div class="step-body">
+          <div class="step-title">Create an email template</div>
+          <div class="step-desc">Click <strong>Email Templates</strong> → <strong>Create New Template</strong>. Paste this exact template body:</div>
+          <div class="code-block">Subject: Portfolio contact: {{subject}}
+
+From: {{from_name}} &lt;{{from_email}}&gt;
+
+{{message}}
+<button class="copy-btn" onclick="cp(this,'Subject: Portfolio contact: {{subject}}\n\nFrom: {{from_name}} <{{from_email}}>\n\n{{message}}')">Copy</button></div>
+          <div class="step-desc" style="margin-top:8px">Set <strong>To Email</strong> to your Gmail address. Save and note the <strong>Template ID</strong> (e.g. <code>template_xyz456</code>).</div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="num">4</div>
+        <div class="step-body">
+          <div class="step-title">Get your Public Key</div>
+          <div class="step-desc">In the EmailJS dashboard go to <strong>Account</strong> → <strong>General</strong>. Copy your <strong>Public Key</strong> (e.g. <code>abcDEF123_xyz</code>).</div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="num">5</div>
+        <div class="step-body">
+          <div class="step-title">Paste the 3 keys into Contact.jsx</div>
+          <div class="step-desc">Open <code>src/components/Contact.jsx</code> in any text editor (VS Code, Notepad, etc). Find these 3 lines near the top and replace the placeholder values:</div>
+          <div class="code-block">const EMAILJS_SERVICE_ID  = 'service_abc123'
+const EMAILJS_TEMPLATE_ID = 'template_xyz456'
+const EMAILJS_PUBLIC_KEY  = 'abcDEF123_xyz'
+<button class="copy-btn" onclick="cp(this,`const EMAILJS_SERVICE_ID  = 'YOUR_SERVICE_ID'\nconst EMAILJS_TEMPLATE_ID = 'YOUR_TEMPLATE_ID'\nconst EMAILJS_PUBLIC_KEY  = 'YOUR_PUBLIC_KEY'`)">Copy</button></div>
+          <div class="note"><i class="ti ti-info-circle" aria-hidden="true"></i> Run <code>npm run dev</code> and test the contact form. You should receive an email in Gmail within seconds.</div>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:20px; display:flex; justify-content:space-between">
+      <button class="pt" onclick="show(0)"><i class="ti ti-arrow-left" aria-hidden="true"></i> Back</button>
+      <button class="pt" onclick="show(2)" style="background:var(--color-background-primary)">Next: Git init <i class="ti ti-arrow-right" aria-hidden="true"></i></button>
+    </div>
+  </div>
+
+  <!-- PHASE 2: GIT -->
+  <div class="phase" id="p2">
+    <div class="section-label">Create Bitbucket repository &amp; initialize Git</div>
+    <div class="steps">
+      <div class="step">
+        <div class="num">1</div>
+        <div class="step-body">
+          <div class="step-title">Create a Bitbucket account (if you don't have one)</div>
+          <div class="link-row">
+            <a class="ext-link" onclick="openLink('https://bitbucket.org')"><i class="ti ti-external-link" aria-hidden="true"></i> bitbucket.org → Sign up free</a>
+          </div>
+          <div class="note"><i class="ti ti-info-circle" aria-hidden="true"></i> Note your Bitbucket <strong>username</strong> — you'll use it in the next step.</div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="num">2</div>
+        <div class="step-body">
+          <div class="step-title">Create a new repository with this exact name</div>
+          <div class="step-desc">In Bitbucket: click <strong>+</strong> → <strong>Repository</strong>. Set the name to exactly your username followed by <code>.bitbucket.io</code>. This naming convention is what activates free static hosting.</div>
+          <div class="code-block">&lt;your-username&gt;.bitbucket.io
+
+Example: harshagrawal.bitbucket.io</div>
+          <div class="warn"><i class="ti ti-alert-triangle" aria-hidden="true"></i> The repo name must match your Bitbucket username exactly. <code>harshagrawal.bitbucket.io</code> not <code>harsh-agrawal.bitbucket.io</code>.</div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="num">3</div>
+        <div class="step-body">
+          <div class="step-title">Install Git (if not already installed)</div>
+          <div class="link-row">
+            <a class="ext-link" onclick="openLink('https://git-scm.com/downloads')"><i class="ti ti-external-link" aria-hidden="true"></i> git-scm.com/downloads</a>
+          </div>
+          <div class="step-desc" style="margin-top:8px">Verify by running in Terminal:</div>
+          <div class="code-block">git --version
+<button class="copy-btn" onclick="cp(this,'git --version')">Copy</button></div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="num">4</div>
+        <div class="step-body">
+          <div class="step-title">Initialize Git inside your portfolio folder</div>
+          <div class="code-block">cd ~/Desktop/portfolio
+git init
+git remote add origin https://&lt;your-username&gt;@bitbucket.org/&lt;your-username&gt;/&lt;your-username&gt;.bitbucket.io.git
+<button class="copy-btn" onclick="cp(this,'git init\ngit remote add origin https://USERNAME@bitbucket.org/USERNAME/USERNAME.bitbucket.io.git')">Copy</button></div>
+          <div class="note"><i class="ti ti-info-circle" aria-hidden="true"></i> Replace <code>&lt;your-username&gt;</code> with your actual Bitbucket username in both places.</div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="num">5</div>
+        <div class="step-body">
+          <div class="step-title">Configure Git identity (first time only)</div>
+          <div class="code-block">git config --global user.name "Harsh Agrawal"
+git config --global user.email "h3108.agrawal@gmail.com"
+<button class="copy-btn" onclick="cp(this,'git config --global user.name "Harsh Agrawal"\ngit config --global user.email "h3108.agrawal@gmail.com"')">Copy</button></div>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:20px; display:flex; justify-content:space-between">
+      <button class="pt" onclick="show(1)"><i class="ti ti-arrow-left" aria-hidden="true"></i> Back</button>
+      <button class="pt" onclick="show(3)" style="background:var(--color-background-primary)">Next: Build &amp; deploy <i class="ti ti-arrow-right" aria-hidden="true"></i></button>
+    </div>
+  </div>
+
+  <!-- PHASE 3: DEPLOY -->
+  <div class="phase" id="p3">
+    <div class="section-label">Build the production bundle &amp; push to Bitbucket</div>
+    <div class="steps">
+      <div class="step">
+        <div class="num">1</div>
+        <div class="step-body">
+          <div class="step-title">Build the production files</div>
+          <div class="step-desc">This creates an optimized <code>dist/</code> folder with your entire site as static HTML/CSS/JS files.</div>
+          <div class="code-block">npm run build
+<button class="copy-btn" onclick="cp(this,'npm run build')">Copy</button></div>
+          <div class="note"><i class="ti ti-info-circle" aria-hidden="true"></i> You should see <strong>✓ built in ~2s</strong>. A <code>dist/</code> folder will appear inside your portfolio folder.</div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="num">2</div>
+        <div class="step-body">
+          <div class="step-title">Create a .gitignore file</div>
+          <div class="step-desc">This tells Git to ignore the node_modules folder (it's huge and not needed in the repo).</div>
+          <div class="code-block">echo "node_modules/" > .gitignore
+<button class="copy-btn" onclick="cp(this,'echo "node_modules/" > .gitignore')">Copy</button></div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="num">3</div>
+        <div class="step-body">
+          <div class="step-title">Copy dist files to root and commit</div>
+          <div class="step-desc">Bitbucket Pages serves from the root of your repo's <code>main</code> branch. Copy the built files up and commit everything.</div>
+          <div class="code-block">cp -r dist/* .
+git add .
+git commit -m "Initial portfolio deploy"
+<button class="copy-btn" onclick="cp(this,'cp -r dist/* .\ngit add .\ngit commit -m "Initial portfolio deploy"')">Copy</button></div>
+          <div class="warn"><i class="ti ti-alert-triangle" aria-hidden="true"></i> On Windows use <code>xcopy dist\* . /E /H</code> instead of <code>cp -r dist/* .</code></div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="num">4</div>
+        <div class="step-body">
+          <div class="step-title">Push to Bitbucket</div>
+          <div class="code-block">git push -u origin main
+<button class="copy-btn" onclick="cp(this,'git push -u origin main')">Copy</button></div>
+          <div class="step-desc" style="margin-top:8px">Git will ask for your Bitbucket username and password (or app password). Enter them and the push will complete in a few seconds.</div>
+          <div class="note"><i class="ti ti-info-circle" aria-hidden="true"></i> If you have 2FA on Bitbucket, create an App Password: <strong>Account Settings → App Passwords → Create</strong>. Use that instead of your regular password.</div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="num">5</div>
+        <div class="step-body">
+          <div class="step-title">For future updates — one command</div>
+          <div class="step-desc">Whenever you update the portfolio content, run these 4 commands to rebuild and redeploy:</div>
+          <div class="code-block">npm run build
+cp -r dist/* .
+git add . && git commit -m "Update portfolio"
+git push
+<button class="copy-btn" onclick="cp(this,'npm run build\ncp -r dist/* .\ngit add . && git commit -m "Update portfolio"\ngit push')">Copy</button></div>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:20px; display:flex; justify-content:space-between">
+      <button class="pt" onclick="show(2)"><i class="ti ti-arrow-left" aria-hidden="true"></i> Back</button>
+      <button class="pt" onclick="show(4)" style="background:var(--color-background-primary)">Next: Go live <i class="ti ti-arrow-right" aria-hidden="true"></i></button>
+    </div>
+  </div>
+
+  <!-- PHASE 4: GO LIVE -->
+  <div class="phase" id="p4">
+    <div class="section-label">Verify your live site</div>
+    <div class="steps">
+      <div class="step">
+        <div class="num done"><i class="ti ti-check" aria-hidden="true"></i></div>
+        <div class="step-body">
+          <div class="step-title">Your site is live!</div>
+          <div class="step-desc">After pushing, wait 1–2 minutes for Bitbucket to deploy. Then open your browser and go to:</div>
+          <div class="code-block">https://&lt;your-username&gt;.bitbucket.io
+<button class="copy-btn" onclick="cp(this,'https://USERNAME.bitbucket.io')">Copy</button></div>
+          <div class="note"><i class="ti ti-info-circle" aria-hidden="true"></i> First load might take up to 5 minutes. If you see a 404, wait a bit longer and hard-refresh with Ctrl+Shift+R.</div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="num done"><i class="ti ti-check" aria-hidden="true"></i></div>
+        <div class="step-body">
+          <div class="step-title">Test the contact form</div>
+          <div class="step-desc">Open your live site, scroll to the Contact section, fill in the form, and hit Send. Check your Gmail inbox — you should receive the message within 30 seconds.</div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="num done"><i class="ti ti-check" aria-hidden="true"></i></div>
+        <div class="step-body">
+          <div class="step-title">Test dark/light mode</div>
+          <div class="step-desc">Click the moon/sun icon in the top-right of the navbar to toggle between modes. Your preference is saved automatically.</div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="num done"><i class="ti ti-check" aria-hidden="true"></i></div>
+        <div class="step-body">
+          <div class="step-title">Share your URL</div>
+          <div class="step-desc">Add it to your LinkedIn profile, email signature, and resume header. Your portfolio is now live and accessible worldwide — for free.</div>
+          <div class="kv">
+            <span class="kv-key">Hosting cost</span><span class="kv-val">₹0 / month</span>
+            <span class="kv-key">EmailJS free tier</span><span class="kv-val">200 emails/month</span>
+            <span class="kv-key">Custom domain</span><span class="kv-val">Optional — buy any .com and point DNS to Bitbucket</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="num">?</div>
+        <div class="step-body">
+          <div class="step-title">Troubleshooting</div>
+          <div class="step-desc">Common issues and fixes:</div>
+          <div class="kv">
+            <span class="kv-key">Site shows 404</span><span class="kv-val">Wait 5 min, hard-refresh. Check repo name matches username.bitbucket.io</span>
+            <span class="kv-key">White screen</span><span class="kv-val">Open browser DevTools → Console. Usually a path issue — check vite.config.js base: './'</span>
+            <span class="kv-key">Form not sending</span><span class="kv-val">Double-check the 3 EmailJS constants in Contact.jsx. Test locally first.</span>
+            <span class="kv-key">Git push rejected</span><span class="kv-val">Use an App Password (Account Settings → App Passwords) not your main password.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:20px; display:flex; justify-content:space-between; align-items:center">
+      <button class="pt" onclick="show(3)"><i class="ti ti-arrow-left" aria-hidden="true"></i> Back</button>
+      <button class="pt" onclick="sendPrompt('How do I add a custom domain to my Bitbucket Pages portfolio?')" style="background:var(--color-background-primary)">Add custom domain ↗</button>
+    </div>
+  </div>
+</div>
+
+<script>
+function show(i) {
+  document.querySelectorAll('.phase').forEach((p,j) => p.classList.toggle('active', j===i));
+  document.querySelectorAll('.pt').forEach((t,j) => t.classList.toggle('active', j===i));
+  document.querySelectorAll('.prog-step').forEach((s,j) => s.classList.toggle('on', j<=i));
+}
+function cp(btn, txt) {
+  navigator.clipboard.writeText(txt).then(() => {
+    btn.textContent = 'Copied!';
+    setTimeout(() => btn.textContent = 'Copy', 1500);
+  });
+}
+</script>
